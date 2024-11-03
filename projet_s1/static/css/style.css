@@ -1,0 +1,120 @@
+body {
+    background-color: 	#000000;
+}
+ul{
+color: #ffffff
+}
+
+h1 {
+    color: #ffffff; 
+}
+
+
+h2 {
+    color: #ffffff; 
+}
+
+p {
+    color: #ffffff;
+}
+
+header,
+nav,
+main,
+footer {
+    padding: 1em 0;
+}
+
+header {
+    background-color: 	#831010;
+    text-align: center;
+    border-radius: 1em;
+}
+
+#div-central {
+    display: flex;
+	justify-content: space-between;
+	align-items: stretch;
+    margin: auto;
+	box-sizing: border-box;
+	height: 100%;
+}
+
+nav {
+    display: flex; /* Affiche les éléments du menu en ligne */
+    justify-content: space-around; /* Espace les liens uniformément */
+    background-color: #000000;
+    padding: 0.5em 0; /* Ajoute du padding en haut et en bas du menu */
+    position: fixed; /* Fixe le menu en haut de la page */
+    top: 0;
+    width: 100%; /* Le menu occupe toute la largeur */
+    width: calc(100% - 1em);
+    z-index: 1000; /* Assure que le menu reste au-dessus du contenu */
+}
+
+nav ul {
+    display: flex; /* Organise les éléments en ligne */
+    list-style-type: none; /* Supprime les puces de la liste */
+    margin: 0;
+    padding: 0;
+    justify-content: space-around; /* Espace les éléments de manière uniforme */
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    padding: 0 1em; /* Espace autour des liens */
+}
+
+nav a:visited {
+    color: white;
+    text-decoration: none;
+    padding: 0 1em; /* Espace autour des liens */
+}
+
+main {
+	flex : 10;
+    background-color: 	#000000;
+    padding-left: 3em;
+}
+
+footer {
+	display: flex;
+	justify-content: space-around;
+    background-color: #831010;
+    border-radius: 1em;
+}
+
+.fond-jaune {
+	background-color: yellow;
+}
+
+.alert-error {
+    padding: 0.75rem 1.25rem;
+    margin: 1.5rem 0rem;
+    border: 2px solid transparent;
+    border-radius: 0.25rem;
+    color: rgb(255, 255, 255);
+    background-color: #ff00003d;
+    border-color: #ff0000;
+}
+
+.alert-success {
+    padding: 0.75rem 1.25rem;
+    margin: 1.5rem 0rem;
+    border: 2px solid transparent;
+    border-radius: 0.25rem;
+    color: rgb(255, 255, 255);
+    background-color: #48ff004e;
+    border-color: #00ff00;
+}
+
+.alert-warning {
+    padding: 0.75rem 1.25rem;
+    margin: 1.5rem 0rem;
+    border: 1px solid transparent;
+    border-radius: 0.25rem;
+    color: rgb(255, 255, 255);
+    background-color: #ffda07c8;
+    border-color: #ffb300;
+}

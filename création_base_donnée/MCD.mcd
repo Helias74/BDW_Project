@@ -1,0 +1,55 @@
+:
+:
+Contenu,11 BOITE,0N OFFICIEL
+BOITE:Référence,nom, prix
+:
+:
+:
+
+:
+:
+OFFICIEL:Age_recommandé
+Proposé, 11 OFFICIEL, 0N USINE
+:
+:
+:
+
+:
+AMATEUR:Nom,Licence
+/XT\ CONSTRUCTION => AMATEUR, OFFICIEL
+:
+USINE:Ville,Pays
+:
+:
+
+ÉTAPE:Numéro,Image,Instructions
+Suivre,1N CONSTRUCTION, _11 ÉTAPE
+CONSTRUCTION:Nom,Thème,Description,Année_de_sortie ,Dimensions
+Assemblage, 1N CONSTRUCTION, 0N piece
+Fabriqué, 0N USINE, 11 piece:Date,Quantité
+Évolution,0N CONFIGURATION, 11 CONFIGURATION
+:
+
+:
+PHOTO: Titre, Description, Chemin_vers_fichier
+/XT\ PHOTO => CONSTRUCTION, piece
+piece:id_serial,longueur,largeur,hauteur,couleur
+Enregistre,0N piece, 11 TOURS:Description, Action
+CONFIGURATION:Propriété,Valeur
+:
+
+:
+:
+:
+Posséder1, 11 piece, 1N SUBSTITUTION
+TOURS: Numéro, Prénom ,Date_d_inscription
+Possède, 11 PARTIE, 0N CONFIGURATION
+JOUEUSE:Prénom, Date_d_inscription, Avatar
+
+:
+:
+:
+SUBSTITUTION:id, nom, commentaire
+Comprendre,_11 TOURS, 1N PARTIE
+PARTIE: Date_deb, Date_fin, Score, Gagnante
+Dérouler, 1N PARTIE, 01 JOUEUSE

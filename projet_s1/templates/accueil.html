@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block main_content %}
+<h2>Défiez votre logique et votre précision, chaque mouvement compte !</h2>
+
+<p id="parag_description">
+	Votre mission est de recouvrir chaque case cible en utilisant quatre briques disponibles à chaque tour. 
+</br>
+	Choisissez de les placer ou de les échanger pour optimiser votre stratégie. 
+</br>
+	Atteignez l’objectif avec le minimum de tours possible et devenez maître de la grille !
+</p>
+
+</br>
+</br>
+</br>
+</br>
+</br>
+
+<p>Actuellement, il y a :</p>
+<ul>
+    <li>{{ SESSION['message']}} </li>
+	<li>{{ SESSION['message2']}} </li>
+	<li>{{ SESSION['message3']}} </li>
+</ul>
+
+</br>
+</br>
+<p>Le classement des couleurs les plus utilisées pour les pièces :</p>
+<ul>
+    <li>{{ SESSION['top5_couleurs'][0]}} </li>
+	<li>{{ SESSION['top5_couleurs'][1]}} </li>
+	<li>{{ SESSION['top5_couleurs'][2]}} </li>
+	<li>{{ SESSION['top5_couleurs'][3]}} </li>
+	<li>{{ SESSION['top5_couleurs'][4]}} </li>
+</ul>
+</br>
+</br>
+</br>
+
+
+
+
+{% endblock %}
