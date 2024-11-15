@@ -1,44 +1,79 @@
 {% extends "base.html" %}
 
 {% block main_content %}
-<h2>Défiez votre logique et votre précision, chaque mouvement compte !</h2>
 
-<p id="parag_description">
-	Votre mission est de recouvrir chaque case cible en utilisant quatre briques disponibles à chaque tour. 
-</br>
-	Choisissez de les placer ou de les échanger pour optimiser votre stratégie. 
-</br>
-	Atteignez l’objectif avec le minimum de tours possible et devenez maître de la grille !
-</p>
 
-</br>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page acceuil de Target</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
 </br>
 </br>
 </br>
 </br>
 
-<p>Actuellement, il y a :</p>
-<ul>
-    <li>{{ SESSION['message']}} </li>
-	<li>{{ SESSION['message2']}} </li>
-	<li>{{ SESSION['message3']}} </li>
-</ul>
-
+<main>
+<article class="carre-blanc1">
+	<div class="titre-carre-blanc1">
+		<h2>Défiez votre logique !</h2>
+	</div>
 </br>
-</br>
-<p>Le classement des couleurs les plus utilisées pour les pièces :</p>
-<ul>
-    <li>{{ SESSION['top5_couleurs'][0]}} </li>
-	<li>{{ SESSION['top5_couleurs'][1]}} </li>
-	<li>{{ SESSION['top5_couleurs'][2]}} </li>
-	<li>{{ SESSION['top5_couleurs'][3]}} </li>
-	<li>{{ SESSION['top5_couleurs'][4]}} </li>
-</ul>
-</br>
-</br>
-</br>
+    <div class="texte-carre-blanc1">
+		<p id="parag_description">
+			Votre mission est de recouvrir chaque case cible en utilisant quatre briques disponibles à chaque tour. 
+		</br>
+			Choisissez de les placer ou de les échanger pour optimiser votre stratégie. 
+		</br>
+			Atteignez l’objectif avec le minimum de tours possible et devenez maître de la grille !
+		</p>
+	</div>
+</article>
 
 
 
+<article class="carre-blanc2">
+	<div class="titre-carre-blanc2">
+		<h2>Actuellement dans le jeu : </h2>
+	</div>
+    <div class="texte-carre-blanc1">
+		<p id="parag_description">
+			<ul>
+				<li>{{ SESSION['message']}} </li>
+				<li>{{ SESSION['message2']}} </li>
+				<li>{{ SESSION['message3']}} </li>
+			</ul> 
+		</p>
+	</div>
+	<div class="titre-carre-blanc2">
+		<h2>Les 5 couleurs les plus utilisées : </h2>
+	</div>
+    <div class="texte-carre-blanc1">
+		<p id="parag_description">
+			<ul>
+				<li>{{ SESSION['top5_couleurs'][0]}} </li>
+				<li>{{ SESSION['top5_couleurs'][1]}} </li>
+				<li>{{ SESSION['top5_couleurs'][2]}} </li>
+				<li>{{ SESSION['top5_couleurs'][3]}} </li>
+				<li>{{ SESSION['top5_couleurs'][4]}} </li>
+			</ul>
+		</p>
+	</div>
+	<div class="titre-carre-blanc2">
+		<h2>Scores min et max selon les joueuses : </h2>
+	</div>
+    <div class="texte-carre-blanc1">
+		<p id="parag_description">
+			{% for personne in SESSION['liste_score_min_max']  %}
+    			{{personne[0]}} à un score minimum de {{personne[2]}} et un score maximum de {{personne[3]}}
+				<br>
+			{% endfor %}	
+		</p>
+	</div>
+</article>
+</main>
+</body>
 
 {% endblock %}

@@ -1,21 +1,39 @@
+@font-face {
+    font-family: 'Climate Crisis';
+    src: url('ClimateCrisis-Regular.eot');
+    src: local('Climate Crisis Regular'), local('ClimateCrisis-Regular'),
+        url('ClimateCrisis-Regular.eot?#iefix') format('embedded-opentype'),
+        url('ClimateCrisis-Regular.woff2') format('woff2'),
+        url('ClimateCrisis-Regular.woff') format('woff'),
+        url('ClimateCrisis-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
 body {
-    background-color: 	#000000;
+    background-color: #0D97D7;
+    margin: 0;
+    padding: 0;
 }
 ul{
-color: #ffffff
+    color: #0D97D7
 }
 
 h1 {
-    color: #ffffff; 
+    font-family: 'Climate Crisis', sans-serif;
+    color: #FBFF26; 
+    text-align: center;
+    font-size: 5em;
 }
 
 
 h2 {
-    color: #ffffff; 
+    color: #0D97D7; 
 }
 
 p {
-    color: #ffffff;
+    color: #000000;
 }
 
 header,
@@ -26,43 +44,68 @@ footer {
 }
 
 header {
-    background-color: 	#831010;
-    text-align: center;
-    border-radius: 1em;
+    background: linear-gradient(to bottom, #0D97D7 20%, #ffffff 100%);
 }
 
-#div-central {
+
+
+.header {
     display: flex;
-	justify-content: space-between;
-	align-items: stretch;
-    margin: auto;
-	box-sizing: border-box;
-	height: 100%;
+    align-items: center;
+    justify-content: space-between;
+    /*padding: 0.5em;
+    text-align: center;*/
+}
+
+.logo {
+    max-width: 1000px; /* Taille maximale */
+    height: auto;
+    margin-top: 15px;
+    margin-right: auto;
+}
+
+ul {
+    /*font-family: 'Climate Crisis', sans-serif;*/
+    display: column; /* Organise les éléments en ligne */
+    list-style-type: none; /* Supprime les puces de la liste */
+    margin: 0;
+    padding: 0;
+    justify-content: space-between; /* Espace les éléments de manière uniforme */
+    width: 50%;
+}
+
+li{
+    color: black;
+    text-align: justify;
+    font-size: 1.3em;
 }
 
 nav {
+    font-family: 'Climate Crisis', sans-serif;
     display: flex; /* Affiche les éléments du menu en ligne */
     justify-content: space-around; /* Espace les liens uniformément */
-    background-color: #000000;
+    background-color: #0D97D7;
     padding: 0.5em 0; /* Ajoute du padding en haut et en bas du menu */
     position: fixed; /* Fixe le menu en haut de la page */
     top: 0;
     width: 100%; /* Le menu occupe toute la largeur */
-    width: calc(100% - 1em);
     z-index: 1000; /* Assure que le menu reste au-dessus du contenu */
 }
 
 nav ul {
+    /*font-family: 'Climate Crisis', sans-serif;*/
     display: flex; /* Organise les éléments en ligne */
     list-style-type: none; /* Supprime les puces de la liste */
     margin: 0;
     padding: 0;
-    justify-content: space-around; /* Espace les éléments de manière uniforme */
+    justify-content: space-between; /* Espace les éléments de manière uniforme */
+    width: 50%;
 }
 
 nav a {
     color: white;
     text-decoration: none;
+    font-size: 1.3em;
     padding: 0 1em; /* Espace autour des liens */
 }
 
@@ -74,47 +117,76 @@ nav a:visited {
 
 main {
 	flex : 10;
-    background-color: 	#000000;
+    background-color: 	#ffffff;
     padding-left: 3em;
+    padding-right: 3em;
 }
 
 footer {
-	display: flex;
-	justify-content: space-around;
-    background-color: #831010;
-    border-radius: 1em;
+    display: flex;
+    align-items: flex-end; /* Aligne le contenu en bas */
+    justify-content: space-around; /* Centre le contenu horizontalement */
+    padding-bottom: 1.2em;
+    background: linear-gradient(to bottom, #ffffff 20%, #0D97D7 100%);
+    height: 150px; 
 }
 
-.fond-jaune {
-	background-color: yellow;
+
+.carre-blanc1 {
+    width: 50%;;
+    padding: 20px;
+    margin: 20px auto 20px 0; 
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Ombre douce */
+    text-align: center; /* Centre le contenu dans le carré */
+    position: relative;
+    z-index: 2;
 }
 
-.alert-error {
-    padding: 0.75rem 1.25rem;
-    margin: 1.5rem 0rem;
-    border: 2px solid transparent;
-    border-radius: 0.25rem;
-    color: rgb(255, 255, 255);
-    background-color: #ff00003d;
-    border-color: #ff0000;
+.carre-blanc2 {
+    width: 50%;;
+    padding: 20px;
+    margin: -70px 0 20px auto;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Ombre douce */
+    text-align: center; /* Centre le contenu dans le carré */
+    position: relative;
+    z-index: 1;
 }
 
-.alert-success {
-    padding: 0.75rem 1.25rem;
-    margin: 1.5rem 0rem;
-    border: 2px solid transparent;
-    border-radius: 0.25rem;
-    color: rgb(255, 255, 255);
-    background-color: #48ff004e;
-    border-color: #00ff00;
+.titre-carre-blanc1 h2 {
+    font-size: 2em;
+    color: #0D97D7; /* Couleur du texte */
+    margin-bottom: 10px;
 }
 
-.alert-warning {
-    padding: 0.75rem 1.25rem;
-    margin: 1.5rem 0rem;
-    border: 1px solid transparent;
-    border-radius: 0.25rem;
-    color: rgb(255, 255, 255);
-    background-color: #ffda07c8;
-    border-color: #ffb300;
+
+.titre-carre-blanc2 h2 {
+    font-size: 2em;
+    color: #0D97D7; /* Couleur du texte */
+    margin-bottom: 10px;
+}
+
+.texte-carre-blanc1 {
+    text-align: center; /* Centre le contenu du texte */
+}
+.texte-carre-blanc2 {
+    text-align: justify; /* Centre le contenu du texte */
+}
+
+.texte-carre-blanc1 p {
+    font-size: 1.4em;
+    line-height: 1.6;
+    color: #000000; /* Couleur du texte */
+    margin: 10px 0;
+}
+
+.carre-blanc2 p {
+    font-size: 1.4em;
+    line-height: 1.6;
+    color: #000000; /* Couleur du texte */
+    margin: 10px 0;
+    text-align: justify;
 }

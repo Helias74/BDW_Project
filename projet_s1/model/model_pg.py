@@ -62,6 +62,29 @@ def top5_couleurs(connexion):
     
     return execute_select_query(connexion, query)
 
+def score_min_max(connexion):
+    """
+    Retourne pour chaque joueuse son score min et max 
+    """
+    # Requête SQL 
+    query = sql.SQL("""
+        SELECT 
+        JOUEUSE.Prenom,
+        JOUEUSE.Date_d_inscription,
+        MIN(PARTICIPATION.Score) AS Score_Minimal,
+        MAX(PARTICIPATION.Score) AS Score_Maximal
+        FROM 
+        JOUEUSE
+        JOIN 
+        PARTICIPATION ON JOUEUSE.Prenom = PARTICIPATION.Prenom 
+        AND JOUEUSE.Date_d_inscription = PARTICIPATION.Date_d_inscription
+        GROUP BY 
+        JOUEUSE.Prenom, 
+        JOUEUSE.Date_d_inscription;
+    """)
+    
+    return execute_select_query(connexion, query)
+
 
 
 

@@ -6,16 +6,14 @@
   <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
   <meta content="utf-8" http-equiv="encoding">
   <link type="text/css" rel="stylesheet" href="/projet_s1/static/css/style.css">
-  <link rel="shortcut icon" type="image/x-icon" href="/projet_s1/static/img/accueil.jpeg" />
+  <link rel="shortcut icon" type="image/x-icon" href="/projet_s1/static/img/accueil.png" />
   <title>{{ SESSION['APP'] }} - {{ SESSION['BASELINE'] }}</title>
 </head>
 
 <body>
   {% include 'header.html' %}
-
+  {% include 'menu.html' %}
   <div id="div-central">
-    {% include 'menu.html' %}
-  
     <main>
       {% block main_content %}{% endblock %}
     </main>

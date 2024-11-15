@@ -1,0 +1,13 @@
+@font-face {
+    font-family: 'Climate Crisis';
+    src: url('ClimateCrisis-Regular.eot');
+    src: local('Climate Crisis Regular'), local('ClimateCrisis-Regular'),
+        url('ClimateCrisis-Regular.eot?#iefix') format('embedded-opentype'),
+        url('ClimateCrisis-Regular.woff2') format('woff2'),
+        url('ClimateCrisis-Regular.woff') format('woff'),
+        url('ClimateCrisis-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+

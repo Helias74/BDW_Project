@@ -7,4 +7,3 @@
 url = ""
 controleur = "controleurs/accueil.py"
 template = "accueil.html"
-
