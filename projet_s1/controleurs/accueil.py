@@ -1,5 +1,5 @@
 import psycopg
-from model.model_pg import count_instances,top5_couleurs,score_min_max
+from model.model_pg import count_instances,top5_couleurs,score_min_max,min_max_defausse,min_max_pioche
 
 res = count_instances(SESSION['CONNEXION'], 'piece')
 if res is not None:
@@ -14,28 +14,30 @@ else:
 print (SESSION['message'])
 
 
-res2 = count_instances(SESSION['CONNEXION'], 'boite')
+res2 = count_instances(SESSION['CONNEXION'], 'participation')
+print ("res2  en dessous")
+print (res2)
 if res2 is not None:
-                nb_boite = res2[0][0]
+                nb_participation = res2[0][0]
 else:
-    nb_boite = 0
-SESSION['nb_piece'] = nb_boite
-if nb_boite > 0:
-    SESSION['message2'] = f"{nb_boite} boites enregistrés."
+    nb_participation = 0
+SESSION['nb_piece'] = nb_participation
+if nb_participation > 0:
+    SESSION['message2'] = f"{nb_participation} participation de joueuses à des parties."
 else:
-    SESSION['message2'] = "Aucune boite enregistré."
+    SESSION['message2'] = "Aucune joueuse n'a participé à une partie."
 print (SESSION['message2'])
 
-res3 = count_instances(SESSION['CONNEXION'], 'etape')
+res3 = count_instances(SESSION['CONNEXION'], 'joueuse')
 if res3 is not None:
-                nb_etape = res3[0][0]
+                nb_joueuse= res3[0][0]
 else:
-    nb_etape = 0
-SESSION['nb_piece'] = nb_etape
-if nb_etape > 0:
-    SESSION['message3'] = f"{nb_etape} étapes enregistrés."
+    nb_joueuse = 0
+SESSION['nb_piece'] = nb_joueuse
+if nb_joueuse > 0:
+    SESSION['message3'] = f"{nb_joueuse} joueuse dans le jeu actuellement."
 else:
-    SESSION['message3'] = "Aucune étape enregistré."
+    SESSION['message3'] = "Aucune joueuse dans le jeu actuellement."
 print (SESSION['message3'])
 
 
@@ -53,3 +55,18 @@ res5 = score_min_max(SESSION['CONNEXION'])
 SESSION['liste_score_min_max']=res5
 print ("res 5 en bas")
 print (res5)
+
+
+#Pour défausser et piocher
+res6=min_max_defausse(SESSION['CONNEXION'])
+res7=min_max_pioche(SESSION['CONNEXION'])
+SESSION['min_max_defausse']=res6
+print ("res 6 en bas")
+print (res6)
+SESSION['min_max_pioche']=res7
+
+
+if res6 is not None:
+                SESSION['min_max_defausse'] =  f"{res6} est la partie avec le moins de pièces déffaussé."
+else:
+    SESSION['min_max_defausse'] = "Aucune pièce n'est enregisté."

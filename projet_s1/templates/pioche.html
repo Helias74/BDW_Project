@@ -1,0 +1,15 @@
+<h1>Pioche une brique</h1>
+<form action="/selectionner" method="post">
+    {% for brique in pioche %}
+        <div class="brique">
+            <input type="radio" name="brique_id" value="{{ brique[0] }}" required>
+            <label>
+                <strong>Brique {{ brique[0] }}</strong><br>
+                Longueur : {{ brique[1] }}<br>
+                Largeur : {{ brique[2] }}<br>
+                Couleur : {{ brique[4] }}
+            </label>
+        </div>
+    {% endfor %}
+    <button type="submit">Sélectionner cette brique</button>
+</form>

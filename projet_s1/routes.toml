@@ -7,3 +7,8 @@
 url = ""
 controleur = "controleurs/accueil.py"
 template = "accueil.html"
+
+[[routes]]
+url = "jouer"
+controleur = "controleurs/jouer.py"
+template = "jouer.html"

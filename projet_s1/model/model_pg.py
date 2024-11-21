@@ -85,7 +85,51 @@ def score_min_max(connexion):
     
     return execute_select_query(connexion, query)
 
+def min_max_defausse(connexion):
+    """
+    partie avec le moins et le plus de pièce déffausé 
+    """
+    query = sql.SQL("""
+    SELECT 
+        tour_id, 
+        COUNT(*) AS nb_pieces_defaussees
+    FROM 
+        enregistre
+    WHERE 
+        action = 'défausser'
+    GROUP BY 
+        tour_id
+    ORDER BY 
+        nb_pieces_defaussees ASC;
+    LIMIT 1;
+    """)
+
+def min_max_pioche(connexion):
+    """
+    partie avec le moins et le plus de pièce pioché 
+    """
+    query = sql.SQL("""
+    SELECT 
+        tour_id, 
+        COUNT(*) AS nb_pieces_piochees
+    FROM 
+        enregistre
+    WHERE 
+        action = 'piocher'
+    GROUP BY 
+        tour_id
+    ORDER BY 
+        nb_pieces_piochees ASC;
+    """)
 
 
-
+def get_briques_pour_pioche(connexion):
+    query = sql.SQL("""
+        SELECT *
+        FROM piece
+        WHERE longueur <= 2 OR largeur <= 2
+        ORDER BY RANDOM()
+        LIMIT 4;
+    """)
+    
 

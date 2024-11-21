@@ -2,38 +2,97 @@ DROP SCHEMA IF EXISTS legos CASCADE;
 CREATE SCHEMA IF NOT EXISTS legos;
 SET search_path TO legos;
 
+--Liens entre joueuse et partie (association faite par partitipation)
+
+CREATE TABLE joueuse (
+  Prenom             VARCHAR(42),
+  Date_d_inscription DATE,
+  Avatar             VARCHAR(255),
+  PRIMARY KEY (Prenom, Date_d_inscription)
+);
+
+CREATE TABLE partie (
+  Date_deb DATE NOT NULL,
+  Date_fin DATE,
+  PRIMARY KEY (Date_deb)
+);
+
+CREATE TABLE participation (
+  Date_deb             DATE,
+  Prenom               VARCHAR(42),
+  Date_d_inscription   DATE,
+  Score                INT,
+  Est_Gagnante         BOOLEAN DEFAULT FALSE,
+  PRIMARY KEY (Date_deb, Prenom, Date_d_inscription),
+  FOREIGN KEY (Date_deb) REFERENCES PARTIE(Date_deb),
+  FOREIGN KEY (Prenom, Date_d_inscription) REFERENCES JOUEUSE(Prenom, Date_d_inscription)
+);
+
+
+--Liens entre une pièce et un tours (modification par l'association enregistre)
+
 CREATE TABLE piece(
 id serial primary key,
-longueur integer,
-largeur integer,
+longueur float,
+largeur float,
 hauteur float,
 couleur varchar(20)
 );
 
+CREATE TABLE tours(
+id serial primary key,
+prenom varchar(42),
+date_inscription date
+);
 
-CREATE TABLE AMATEUR (
-  Nom_1           VARCHAR(42),
+
+CREATE TABLE enregistre (
+    action VARCHAR(50),
+    piece_id INT REFERENCES piece(id),
+    tour_id INT REFERENCES tours(id),
+    PRIMARY KEY (piece_id, tour_id)
+);
+
+
+/*
+CREATE TABLE amateur (
+  Nom     VARCHAR(42) PRIMARY KEY,
   Theme           VARCHAR(42),
   Description     VARCHAR(42),
-  Annee_de_sortie VARCHAR(42),
-  Dimensions      VARCHAR(42),
-  Nom_2           VARCHAR(42),
-  Licence         VARCHAR(42)
+  Annee_de_sortie DATE,
+  Dimensions      float,
+  Nom_amateur     VARCHAR(42),
+  licence         int
+);
+
+
+CREATE TABLE officiel (
+  Nom     VARCHAR(42) PRIMARY KEY,
+  Theme           VARCHAR(42),
+  Description     VARCHAR(42),
+  Annee_de_sortie DATE,
+  Dimensions      float,
+  Age_recommande  int
 );
 
 CREATE TABLE Assemblage (
-  PRIMARY KEY (Titre_1, Titre_2),
-  Titre_1 VARCHAR(42) NOT NULL,
-  Titre_2 VARCHAR(42) NOT NULL
-);
+  PRIMARY KEY (Nom, id serial),
+  Nom VARCHAR(42) NOT NULL,
+  id serial int NOT NULL
+);*/
 
+
+
+
+/*
 CREATE TABLE BOITE (
   PRIMARY KEY (Reference),
   Reference VARCHAR(42) NOT NULL,
   nom       VARCHAR(42),
-  prix      VARCHAR(42)
+  prix      float
 );
-
+*/
+/*
 CREATE TABLE CONFIGURATION (
   PRIMARY KEY (Propriete),
   Propriete   VARCHAR(42) NOT NULL,
@@ -49,32 +108,8 @@ CREATE TABLE ETAPE (
   Instructions VARCHAR(42)
 );
 
-CREATE TABLE JOUEUSE (
-  PRIMARY KEY (Prenom),
-  Prenom             VARCHAR(42) NOT NULL,
-  Date_d_inscription VARCHAR(42),
-  Avatar             VARCHAR(42),
-  Date_deb           VARCHAR(42) NULL
-);
 
-CREATE TABLE OFFICIEL (
-  Nom             VARCHAR(42),
-  Theme           VARCHAR(42),
-  Description     VARCHAR(42),
-  Annee_de_sortie VARCHAR(42),
-  Dimensions      VARCHAR(42),
-  Age_recommande  VARCHAR(42),
-  Ville           VARCHAR(42) NOT NULL
-);
 
-CREATE TABLE PARTIE (
-  PRIMARY KEY (Date_deb),
-  Date_deb  VARCHAR(42) NOT NULL,
-  Date_fin  VARCHAR(42),
-  Score     VARCHAR(42),
-  Gagnante  VARCHAR(42),
-  Propriete VARCHAR(42) NOT NULL
-);
 
 
 CREATE TABLE SUBSTITUTION (
@@ -84,44 +119,11 @@ CREATE TABLE SUBSTITUTION (
   commentaire VARCHAR(42)
 );
 
-CREATE TABLE TOURS (
-  PRIMARY KEY (Date_deb, Numero),
-  Date_deb           VARCHAR(42) NOT NULL,
-  Numero             VARCHAR(42) NOT NULL,
-  Prenom             VARCHAR(42),
-  Date_d_inscription VARCHAR(42),
-  Titre              VARCHAR(42) NOT NULL,
-  Description        VARCHAR(42),
-  Action             VARCHAR(42)
-);
-
 CREATE TABLE USINE (
   PRIMARY KEY (Ville),
   Ville VARCHAR(42) NOT NULL,
   Pays  VARCHAR(42)
-);
-
-/*ALTER TABLE Assemblage ADD FOREIGN KEY (Titre_2) REFERENCES piece (Titre);
-ALTER TABLE Assemblage ADD FOREIGN KEY (Titre_1) REFERENCES PHOTO (Titre);
-
-ALTER TABLE CONFIGURATION ADD FOREIGN KEY (Propriete_2) REFERENCES CONFIGURATION (Propriete);
-
-ALTER TABLE ETAPE ADD FOREIGN KEY (Titre) REFERENCES PHOTO (Titre);
-
-ALTER TABLE JOUEUSE ADD FOREIGN KEY (Date_deb) REFERENCES PARTIE (Date_deb);
-
-ALTER TABLE OFFICIEL ADD FOREIGN KEY (Ville) REFERENCES USINE (Ville);
-
-ALTER TABLE PARTIE ADD FOREIGN KEY (Propriete) REFERENCES CONFIGURATION (Propriete);
-
-ALTER TABLE piece ADD FOREIGN KEY (id) REFERENCES SUBSTITUTION (id);
-ALTER TABLE piece ADD FOREIGN KEY (Ville) REFERENCES USINE (Ville);
-
-ALTER TABLE TOURS ADD FOREIGN KEY (Titre) REFERENCES piece (Titre);
-ALTER TABLE TOURS ADD FOREIGN KEY (Date_deb) REFERENCES PARTIE (Date_deb);*/
-
-
-
+);*/
 
 INSERT INTO legos.piece VALUES (1, 1, 1, 1, '#000000');
 INSERT INTO legos.piece VALUES (2, 2, 1, 1, '#000000');
@@ -1404,6 +1406,24 @@ INSERT INTO legos.piece VALUES (1278, 8, 12, 0.33, '#ff0000');
 INSERT INTO legos.piece VALUES (1279, 10, 12, 0.33, '#ff0000');
 INSERT INTO legos.piece VALUES (1280, 12, 12, 0.33, '#ff0000');
 
+-- Ajouter la première joueuse
+INSERT INTO JOUEUSE (Prenom, Date_d_inscription, Avatar)
+VALUES ('Alice', '2024-11-01', 'avatar_path/alice.png');
 
+-- Ajouter la deuxième joueuse
+INSERT INTO JOUEUSE (Prenom, Date_d_inscription, Avatar)
+VALUES ('Bob', '2024-11-01', 'avatar_path/bob.png');
+
+-- Ajouter une partie
+INSERT INTO PARTIE (Date_deb, Date_fin)
+VALUES ('2024-11-05', '2024-11-05');
+
+-- Ajouter la participation d'Alice (score 50, gagnante)
+INSERT INTO PARTICIPATION (Date_deb, Prenom, Date_d_inscription, Score, Est_Gagnante)
+VALUES ('2024-11-05', 'Alice', '2024-11-01', 50, TRUE);
+
+-- Ajouter la participation de Bob (score 80, perdant)
+INSERT INTO PARTICIPATION (Date_deb, Prenom, Date_d_inscription, Score, Est_Gagnante)
+VALUES ('2024-11-05', 'Bob', '2024-11-01', 80, FALSE);
 
 

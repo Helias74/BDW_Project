@@ -2,7 +2,6 @@
 
 {% block main_content %}
 
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -70,6 +69,15 @@
     			{{personne[0]}} à un score minimum de {{personne[2]}} et un score maximum de {{personne[3]}}
 				<br>
 			{% endfor %}	
+		</p>
+	</div>
+	<div class="titre-carre-blanc2">
+		<h2>Minimum et maximum déffaussé : </h2>
+	</div>
+    <div class="texte-carre-blanc1">
+		<p id="parag_description">
+			{{SESSION['min_max_defausse']}}
+		<br>		
 		</p>
 	</div>
 </article>

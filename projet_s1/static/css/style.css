@@ -190,3 +190,27 @@ footer {
     margin: 10px 0;
     text-align: justify;
 }
+
+
+/*Réglage grille partie jeu*/
+
+table {
+    margin: 0 auto;
+    border-collapse: collapse;
+}
+
+
+td {
+    width: 7em;
+    height: 4em;
+    text-align: center;
+}
+
+/* Classes pour les couleurs */
+.yellow {
+    background-color: #FBFF26;
+  }
+  
+  .blue {
+    background-color: #0D97D7;
+  }
