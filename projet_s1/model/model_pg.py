@@ -131,5 +131,5 @@ def get_briques_pour_pioche(connexion):
         ORDER BY RANDOM()
         LIMIT 4;
     """)
+    return execute_select_query(connexion, query)
     
-

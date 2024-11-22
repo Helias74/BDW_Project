@@ -1,7 +1,8 @@
-<h1>Pioche une brique</h1>
-<form action="/selectionner" method="post">
-    {% for brique in pioche %}
-        <div class="brique">
+<h2>Pioche une brique</h2>
+<form action="jouer" method="get">
+    {% for brique in SESSION['pioche'] %}
+    <h2>nouvelle brique </h2>    
+    <div class="brique">
             <input type="radio" name="brique_id" value="{{ brique[0] }}" required>
             <label>
                 <strong>Brique {{ brique[0] }}</strong><br>
@@ -11,5 +12,9 @@
             </label>
         </div>
     {% endfor %}
-    <button type="submit">Sélectionner cette brique</button>
+    <button type-="submit">Sélectionner cette brique</button> 
 </form>
+{% if GET["brique_id"] %}
+    <p>Valeur reçue par GET : {{
+        GET["brique_id"][0] }}</p>
+{% endif %}
