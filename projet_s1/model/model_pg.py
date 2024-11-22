@@ -103,6 +103,7 @@ def min_max_defausse(connexion):
         nb_pieces_defaussees ASC;
     LIMIT 1;
     """)
+    return execute_select_query(connexion, query)
 
 def min_max_pioche(connexion):
     """
@@ -121,6 +122,7 @@ def min_max_pioche(connexion):
     ORDER BY 
         nb_pieces_piochees ASC;
     """)
+    return execute_select_query(connexion, query)
 
 
 def get_briques_pour_pioche(connexion):
@@ -132,4 +134,9 @@ def get_briques_pour_pioche(connexion):
         LIMIT 4;
     """)
     return execute_select_query(connexion, query)
+<<<<<<< HEAD
     
+=======
+    
+
+>>>>>>> 6837a9d2252651474ef2518eb64e8b0713252fd6
