@@ -1,6 +1,6 @@
 <h2>Pioche une brique</h2>
 <form action="jouer" method="get">
-    {% for brique in SESSION['pioche'] %}
+    {% for brique in SESSION["pioche"] %}
     <h2>nouvelle brique </h2>    
     <div class="brique">
             <input type="radio" name="brique_id" value="{{ brique[0] }}" required>

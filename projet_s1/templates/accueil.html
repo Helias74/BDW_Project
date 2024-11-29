@@ -25,7 +25,7 @@
 			Votre mission est de recouvrir chaque case cible en utilisant quatre briques disponibles à chaque tour. 
 		</br>
 			Choisissez de les placer ou de les échanger pour optimiser votre stratégie. 
-		</br>
+		</br> 
 			Atteignez l’objectif avec le minimum de tours possible et devenez maître de la grille !
 		</p>
 	</div>
@@ -66,7 +66,7 @@
     <div class="texte-carre-blanc1">
 		<p id="parag_description">
 			{% for personne in SESSION['liste_score_min_max']  %}
-    			{{personne[0]}} à un score minimum de {{personne[2]}} et un score maximum de {{personne[3]}}
+    			{{personne[1]}} à un score minimum de {{personne[3]}} et un score maximum de {{personne[4]}}
 				<br>
 			{% endfor %}	
 		</p>

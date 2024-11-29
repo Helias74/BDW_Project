@@ -10,3 +10,5 @@ SESSION['BASELINE'] = "Défiez votre logique"  # Slogan de l'application
 SESSION['DIR_HISTORIQUE'] = path.join(SESSION['DIRECTORY'], "historiques")  # Chemin pour le répertoire des historiques
 SESSION['HISTORIQUE'] = dict()  # Initialisation d'un dictionnaire pour l'historique
 SESSION['CURRENT_YEAR'] = datetime.now().year  # Année actuelle
+SESSION["pioche"] = None
+SESSION["choix"] = []
