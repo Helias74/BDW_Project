@@ -5,10 +5,10 @@ SET search_path TO legos;
 --Liens entre joueuse et partie (association faite par partitipation)
 
 CREATE TABLE joueuse (
-  Prenom             VARCHAR(42),
-  Date_d_inscription DATE,
-  Avatar             VARCHAR(255),
-  PRIMARY KEY (Prenom, Date_d_inscription)
+  id SERIAL PRIMARY KEY,      
+  Prenom VARCHAR(42) NOT NULL,        
+  Date_d_inscription DATE NOT NULL,    
+  Avatar VARCHAR(255)                 
 );
 
 CREATE TABLE partie (
@@ -17,16 +17,21 @@ CREATE TABLE partie (
   PRIMARY KEY (Date_deb)
 );
 
+
 CREATE TABLE participation (
-  Date_deb             DATE,
-  Prenom               VARCHAR(42),
-  Date_d_inscription   DATE,
-  Score                INT,
-  Est_Gagnante         BOOLEAN DEFAULT FALSE,
-  PRIMARY KEY (Date_deb, Prenom, Date_d_inscription),
-  FOREIGN KEY (Date_deb) REFERENCES PARTIE(Date_deb),
-  FOREIGN KEY (Prenom, Date_d_inscription) REFERENCES JOUEUSE(Prenom, Date_d_inscription)
+  Date_deb DATE,                  
+  Joueuse_id INT,                 
+  Score INT,                       
+  Est_Gagnante BOOLEAN DEFAULT FALSE, 
+  PRIMARY KEY (Date_deb, Joueuse_id), 
+  FOREIGN KEY (Date_deb) REFERENCES partie(Date_deb),
+  FOREIGN KEY (Joueuse_id) REFERENCES joueuse(id)     
 );
+
+
+
+
+
 
 
 --Liens entre une pièce et un tours (modification par l'association enregistre)
@@ -52,6 +57,8 @@ CREATE TABLE enregistre (
     tour_id INT REFERENCES tours(id),
     PRIMARY KEY (piece_id, tour_id)
 );
+
+
 
 
 /*
@@ -1418,12 +1425,11 @@ VALUES ('Bob', '2024-11-01', 'avatar_path/bob.png');
 INSERT INTO PARTIE (Date_deb, Date_fin)
 VALUES ('2024-11-05', '2024-11-05');
 
+
 -- Ajouter la participation d'Alice (score 50, gagnante)
-INSERT INTO PARTICIPATION (Date_deb, Prenom, Date_d_inscription, Score, Est_Gagnante)
-VALUES ('2024-11-05', 'Alice', '2024-11-01', 50, TRUE);
+INSERT INTO participation (Date_deb, Joueuse_id, Score, Est_Gagnante)
+VALUES ('2024-11-05', 1, 50, TRUE);
 
 -- Ajouter la participation de Bob (score 80, perdant)
-INSERT INTO PARTICIPATION (Date_deb, Prenom, Date_d_inscription, Score, Est_Gagnante)
-VALUES ('2024-11-05', 'Bob', '2024-11-01', 80, FALSE);
-
-
+INSERT INTO participation (Date_deb, Joueuse_id, Score, Est_Gagnante)
+VALUES ('2024-11-05', 2, 80, FALSE);

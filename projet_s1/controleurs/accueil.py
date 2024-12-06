@@ -70,3 +70,4 @@ if res6 is not None:
                 SESSION['min_max_defausse'] =  f"{res6} est la partie avec le moins de pièces déffaussé."
 else:
     SESSION['min_max_defausse'] = "Aucune pièce n'est enregisté."
+    

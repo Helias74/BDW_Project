@@ -12,3 +12,4 @@ SESSION['HISTORIQUE'] = dict()  # Initialisation d'un dictionnaire pour l'histor
 SESSION['CURRENT_YEAR'] = datetime.now().year  # Année actuelle
 SESSION["pioche"] = None
 SESSION["choix"] = []
+SESSION["grille"] = [[None for _ in range(8)] for _ in range(9)]

@@ -1,78 +1,16 @@
 <table>
-    <tr>
-        {%for i in range (9)%}
+    
+      {%for i in range (9)%}
+      <tr>
+      {%for j in range (9)%}
+      {%if SESSION["grille"][i][j]==True%}
       <td class="blue"></td>
+      {%endif%}
+      {%if SESSION["grille"][i][j]==False%}
+      <td class="yellow"></td>
+      {%endif%}
       {%endfor%}
-    </tr>
-    <tr>
-      <td class="blue"></td>
-      <td class="yellow"></td>
-      <td class="yellow"></td>
-      <td class="blue"></td>
-      <td class="blue"></td>
-      <td class="yellow"></td>
-      <td class="yellow"></td>
-      <td class="blue"></td>
-      <td class="blue"></td>
-    </tr>
-    <tr>
-        <td class="blue"></td>
-        <td class="yellow"></td>
-        <td class="blue"></td>
-        <td class="yellow"></td>
-        <td class="blue"></td>
-        <td class="yellow"></td>
-        <td class="blue"></td>
-        <td class="yellow"></td>
-        <td class="blue"></td>
-    </tr>
-    <tr>
-        <td class="blue"></td>
-        <td class="yellow"></td>
-        <td class="yellow"></td>
-        <td class="yellow"></td>
-        <td class="blue"></td>
-        <td class="yellow"></td>
-        <td class="blue"></td>
-        <td class="yellow"></td>
-        <td class="blue"></td>
-    </tr>
-    <tr>
-        <td class="blue"></td>
-        <td class="yellow"></td>
-        <td class="yellow"></td>
-        <td class="yellow"></td>
-        <td class="blue"></td>
-        <td class="yellow"></td>
-        <td class="blue"></td>
-        <td class="yellow"></td>
-        <td class="blue"></td>
-    </tr>
-    <tr>
-        <td class="blue"></td>
-        <td class="yellow"></td>
-        <td class="blue"></td>
-        <td class="yellow"></td>
-        <td class="blue"></td>
-        <td class="yellow"></td>
-        <td class="blue"></td>
-        <td class="yellow"></td>
-        <td class="blue"></td>
-    </tr>
-    <tr>
-        <td class="blue"></td>
-        <td class="yellow"></td>
-        <td class="yellow"></td>
-        <td class="blue"></td>
-        <td class="blue"></td>
-        <td class="yellow"></td>
-        <td class="yellow"></td>
-        <td class="blue"></td>
-        <td class="blue"></td>
       </tr>
-    <tr>
-        {%for i in range (9)%}
-      <td class="blue"></td>
       {%endfor%}
-    </tr>
+    
 </table>
