@@ -56,7 +56,7 @@ if "longueur_grille" in GET and "hauteur_grille" in GET:
         #Pour le nb de cibles 
         nb = 0
         nb = SESSION["longueur"] * SESSION["hauteur"]
-        rand = random.randint(1,2)
+        rand = random.randint(8,9)
         div = rand/10
         if rand ==1:
             nb = int(nb * div) + 1  
@@ -158,6 +158,7 @@ if "x" in GET and "y" in GET:
     ##Pour Vérifier si le placement choisie est possible 
     b=True
     if (SESSION["longeur_brique_select"] + SESSION["posx"]) <=SESSION["hauteur"]-1 and (SESSION["largeur_brique_select"] + SESSION["posx"]) <=SESSION["longueur"]-1 :
+        b=True
         for i in range (SESSION["longeur_brique_select"]):
             for j in range(SESSION["largeur_brique_select"]):
                 if SESSION["grille"][SESSION["posx"]+i][SESSION["posy"]+j]!=SESSION["cible"]:
