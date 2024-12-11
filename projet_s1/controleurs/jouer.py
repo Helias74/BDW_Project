@@ -56,7 +56,7 @@ if "longueur_grille" in GET and "hauteur_grille" in GET:
         #Pour le nb de cibles 
         nb = 0
         nb = SESSION["longueur"] * SESSION["hauteur"]
-        rand = random.randint(8,9)
+        rand = random.randint(1,2)
         div = rand/10
         if rand ==1:
             nb = int(nb * div) + 1  
