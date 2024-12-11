@@ -1,3 +1,24 @@
+<h2>Indiquer les coordonnées x et y pour placer l'élément choisi</h2>
+<form action="jouer" method="get">
+    <input 
+        type="number" 
+        name="x" 
+        placeholder="x" 
+        min="0" 
+        max="{{ SESSION['longueur'] - 1 }}">
+    
+    <input 
+        type="number" 
+        name="y" 
+        placeholder="y" 
+        min="0" 
+        max="{{ SESSION['hauteur'] - 1 }}">
+    
+    <button type="submit">Valider la sélection</button>
+</form>
+
+
+
 </br>
 </br>
 <table>
@@ -5,11 +26,14 @@
         {% for i in range(SESSION["hauteur"]) %}
             <tr>
                 {% for j in range(SESSION["longueur"]) %}
-                    {% if SESSION["grille"][i][j] == True %}
+                    {% if SESSION["grille"][i][j] == SESSION["case"] %}
                         <td class="blue"></td>
                     {% endif %}
-                    {% if SESSION["grille"][i][j] == False %}
+                    {% if SESSION["grille"][i][j] == SESSION["cible"] %}
                         <td class="yellow"></td>
+                    {% endif %}
+                    {% if SESSION["grille"][i][j] != SESSION["cible"] and SESSION["grille"][i][j] != SESSION["case"] %}
+                        <td class="black"></td>
                     {% endif %}
                 {% endfor %}
             </tr>
