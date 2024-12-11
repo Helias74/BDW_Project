@@ -1,16 +1,34 @@
-<table>
-    
-      {%for i in range (9)%}
+<form action="jouer" method="get">
+  <input 
+      type="number" 
+      name="longueur_grille" 
+      placeholder="Entrez la longueur" 
+      min="1" 
+      max="100">
+  
+  <input 
+      type="number" 
+      name="hauteur_grille" 
+      placeholder="Entrez la hauteur" 
+      min="1" 
+      max="100">
+      <button type-="submit">Valider la selection</button>
+    </br>
+    </br>
+  <table>
+    {% if GET["longueur_grille"] and GET["hauteur_grille"] or SESSION["bool_grille"] == True%} 
+    {% for i in range(SESSION["hauteur"]) %}
       <tr>
-      {%for j in range (9)%}
-      {%if SESSION["grille"][i][j]==True%}
-      <td class="blue"></td>
-      {%endif%}
-      {%if SESSION["grille"][i][j]==False%}
-      <td class="yellow"></td>
-      {%endif%}
-      {%endfor%}
+        {% for j in range(SESSION["longueur"]) %}
+          {% if SESSION["grille"][i][j] == True %}
+          <td class="blue"></td>
+          {% endif %}
+          {% if SESSION["grille"][i][j] == False %}
+          <td class="yellow"></td>
+          {% endif %}
+          {% endfor %}
       </tr>
-      {%endfor%}
-    
-</table>
+      {% endfor %}
+      {% endif %}
+  </table>
+</form>

@@ -144,3 +144,5 @@ def get_briques_pour_pioche_maj(connexion):
         LIMIT 1;
     """)
     return execute_select_query(connexion, query)
+
+

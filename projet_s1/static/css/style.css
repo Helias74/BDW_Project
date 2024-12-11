@@ -186,7 +186,7 @@ footer {
 .carre-blanc2 p {
     font-size: 1.4em;
     line-height: 1.6;
-    color: #000000; /* Couleur du texte */
+    color: #000000; 
     margin: 10px 0;
     text-align: justify;
 }
@@ -196,21 +196,21 @@ footer {
 
 table {
     margin: 0 auto;
-    border-collapse: collapse;
+    border-collapse: collapse; 
+    border: 2px solid black;  
 }
-
 
 td {
     width: 7em;
     height: 4em;
     text-align: center;
+    border: 1px solid black; 
 }
 
-/* Classes pour les couleurs */
 .yellow {
     background-color: #FBFF26;
-  }
+}
   
-  .blue {
+.blue {
     background-color: #0D97D7;
-  }
+}
