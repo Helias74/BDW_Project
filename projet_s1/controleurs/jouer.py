@@ -157,12 +157,16 @@ if "x" in GET and "y" in GET:
     SESSION["posy"] = int(GET["y"][0])
     ##Pour Vérifier si le placement choisie est possible 
     b=True
-    for i in range (SESSION["longeur_brique_select"]):
-        for j in range(SESSION["largeur_brique_select"]):
-            if SESSION["grille"][SESSION["posx"]+i][SESSION["posy"]+j]!=SESSION["cible"]:
-                print ("test de la validité du placement ")
-                b=False
-    #Changement de tours et placement 
+    if (SESSION["longeur_brique_select"] + SESSION["posx"]) <=SESSION["hauteur"]-1 and (SESSION["largeur_brique_select"] + SESSION["posx"]) <=SESSION["longueur"]-1 :
+        for i in range (SESSION["longeur_brique_select"]):
+            for j in range(SESSION["largeur_brique_select"]):
+                if SESSION["grille"][SESSION["posx"]+i][SESSION["posy"]+j]!=SESSION["cible"]:
+                    print ("test de la validité du placement ")
+                    b=False
+        #Changement de tours et placement 
+    else:
+        b=False
+        
     if b==False:
         SESSION["nb_tours"]-=1
         print ("Aucune piece n'a été placé")
