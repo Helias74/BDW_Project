@@ -2,7 +2,20 @@ import psycopg
 import random
 from model.model_pg import get_briques_pour_pioche, get_briques_pour_pioche_maj
 
- 
+###Pour la gestion de lancement de la partie 
+if "longueur_grille" in GET and "hauteur_grille" in GET:
+    SESSION["partie_debut"] = True
+
+###Pour gérer la fin de partie 
+
+if "quitter" in GET:
+    if GET["quitter"][0] == "confirmer":
+        SESSION["partie_debut"] = False
+    
+
+
+
+###Pour la gestion de la pioche 
 if SESSION["pioche"] is None:
     res = get_briques_pour_pioche(SESSION["CONNEXION"])
     if res is not None:
@@ -20,24 +33,22 @@ if "brique_id" in GET:
                 res3 = get_briques_pour_pioche_maj(SESSION["CONNEXION"])
             SESSION["pioche"][i]=res3[0]
 
+
+
+
+
 """
-if  SESSION["grille"][0][0] is None:
-    for i in range (9):
-        for j in range (8):
-            SESSION["grille"][i][j]=True
-    N=36
-    c=0
-    while c!=N:
-        i=random.randint(0,8)
-        j=random.randint(0,7)
-        if  SESSION["grille"][i][j] == True:
-            SESSION["grille"][i][j]=False
-            c+=1
-        
- """
- 
+Vérification pour mise en session des choix de la joueuse 
+print ("affichage de la session choix ")
+for i in range (len(SESSION["choix"])):
+    print ("affichage de la session choix")
+    print (SESSION["choix"][i])
+"""
 
 
+
+
+###Codage de la grille 
 
 #Pour choix de la direction 
 haut = 0
@@ -73,7 +84,6 @@ if "longueur_grille" in GET and "hauteur_grille" in GET:
         h=random.randint(0, SESSION["hauteur"]-1)
         SESSION["grille"][h][l] = False
         nb-=1
-        
         
         while nb>0 :
             nb_provisoir=nb
@@ -134,13 +144,7 @@ if "longueur_grille" in GET and "hauteur_grille" in GET:
         
          
 
-"""
-Vérification pour mise en session des choix de la joueuse 
-print ("affichage de la session choix ")
-for i in range (len(SESSION["choix"])):
-    print ("affichage de la session choix")
-    print (SESSION["choix"][i])
-"""
+
 
    
     

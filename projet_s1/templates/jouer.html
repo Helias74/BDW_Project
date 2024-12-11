@@ -5,20 +5,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Page acceuil de Target</title>
+    <title>Page accueil de Target</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-</br>
-{% include "pioche.html" %}
+    </br>
+    {% if SESSION["partie_debut"] == False %}
+        {% include "menu_partie.html" %}
 
 
-</br>
-</br>
-{% include "grille.html" %}
+    {% endif %}
 
 
+    {% if SESSION["partie_debut"] == True %}
+
+        {% include "pioche.html" %}
+
+        {% if "brique_id" in GET and SESSION["choix"] %}
+            <p>La dernière pièce sélectionnée par la joueuse :  
+                {{ SESSION["choix"][-1] }}
+            </p>
+        {% else %}
+            <p>Aucune pièce n'a été sélectionnée pour l'instant.</p>
+        {% endif %}
+
+        </br>
+        </br>
+        {% include "grille.html" %}
+
+    {% endif %}
 </body>
+
 </html>
 
 {% endblock %}
