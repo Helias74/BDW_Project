@@ -16,3 +16,4 @@ SESSION["bool_grille"] = False #Indique si une grille a été crée
 SESSION["longueur"]  = 0
 SESSION["hauteur"]  = 0
 SESSION["partie_debut"] = False #Indique si la partie est commencé
+SESSION["choix_ensemble"] = []

@@ -28,12 +28,24 @@ if "brique_id" in GET:
     for i in range (4):
         if SESSION["pioche"][i][0]==int(GET["brique_id"][0]):
             SESSION["choix"].append(SESSION["pioche"][i][0])
+            SESSION["choix_ensemble"].append(SESSION["pioche"][i])
             res3 = get_briques_pour_pioche_maj(SESSION["CONNEXION"])
             while res3 in SESSION["choix"]:
                 res3 = get_briques_pour_pioche_maj(SESSION["CONNEXION"])
             SESSION["pioche"][i]=res3[0]
+            
+            ###Pour obtenir la longeur et la largeur de la brique sélectionné
+            longeur_brique_select = SESSION["choix_ensemble"][len(SESSION["choix_ensemble"])-1][1]
+            largeur_brique_select = SESSION["choix_ensemble"][len(SESSION["choix_ensemble"])-1][2]
 
 
+def case_dispo (tab_bool, posx, poxy, long, larg):
+    b=0
+    for i in range (long):
+        for j in range(larg):
+            if tab_bool[posy+i][posx+j]==True:
+                b=False
+    return b            
 
 
 
@@ -72,19 +84,18 @@ if "longueur_grille" in GET and "hauteur_grille" in GET:
         nb = 0
         nb = SESSION["longueur"] * SESSION["hauteur"]
         rand = random.randint(1,2)
-        div = rand
-        div = div/10
+        div = rand/10
         if rand ==1:
             nb = int(nb * div) + 1  
         else:
             nb = int(nb * div)
-        #Mise d'une cible pour test
+        #Mise d'une cible
 
         l=random.randint(0, SESSION["longueur"]-1)
         h=random.randint(0, SESSION["hauteur"]-1)
         SESSION["grille"][h][l] = False
         nb-=1
-        
+        #Ajout des autres cibles
         while nb>0 :
             nb_provisoir=nb
             memoire_direction=[]
@@ -139,7 +150,6 @@ if "longueur_grille" in GET and "hauteur_grille" in GET:
     SESSION["bool_grille"]=True
         
   
-
         
         
          
