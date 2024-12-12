@@ -146,3 +146,50 @@ def get_briques_pour_pioche_maj(connexion):
     return execute_select_query(connexion, query)
 
 
+
+def get_briques_pour_pioche_hard(connexion):
+    query = sql.SQL("""
+        SELECT *
+        FROM piece
+        ORDER BY RANDOM()
+        LIMIT 4;
+    """)
+    return execute_select_query(connexion, query)
+
+def get_briques_pour_pioche_maj_hard(connexion):
+    query = sql.SQL("""
+        SELECT *
+        FROM piece
+        ORDER BY RANDOM()
+        LIMIT 1;
+    """)
+    return execute_select_query(connexion, query)
+
+
+def get_joueuses(connexion):
+    query = sql.SQL("""
+        SELECT * FROM joueuse;
+    """)
+    return execute_select_query(connexion, query)
+
+
+
+def insert_joueuse(connexion, Prenom, Date_d_inscription, Avatar):
+    """
+    Insère une joueuse dans la base de données.
+    """
+    query = '''
+        INSERT INTO joueuse (Prenom, Date_d_inscription, Avatar)
+        VALUES (%s, %s, %s)
+    '''
+    return execute_other_query(connexion, query, [Prenom,Date_d_inscription,Avatar])
+
+def get_joueuse_by_name(connexion, prenom):
+    """
+    Récupère les joueuses avec un prénom donné.
+    """
+    query = '''
+        SELECT * FROM joueuse WHERE Prenom = %s
+    '''
+    return execute_select_query(connexion, query, [prenom])
+

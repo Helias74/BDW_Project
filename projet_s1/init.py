@@ -24,3 +24,5 @@ SESSION["changement"] = False # permet de notifier d'un changement pour regéné
 SESSION["longeur_brique_select"] = 0
 SESSION["largeur_brique_select"] = 0
 SESSION["grille_piece"] = [] #Grille composé de tuples avec l'id et la couleur
+SESSION["tab_joueuse"] = [] #tableau contenant des tuples de type joueuses 
+SESSION["mode"] = 1 #mode de jeu, init à facile

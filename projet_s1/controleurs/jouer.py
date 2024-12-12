@@ -1,7 +1,14 @@
 import psycopg
 import random
-from model.model_pg import get_briques_pour_pioche, get_briques_pour_pioche_maj
-
+from model.model_pg import (
+    get_briques_pour_pioche,
+    get_briques_pour_pioche_maj,
+    get_briques_pour_pioche_hard,
+    get_briques_pour_pioche_maj_hard,
+    get_joueuses,
+    insert_joueuse,
+    get_joueuse_by_name,
+)
 ###Pour la gestion de lancement de la partie 
 if "longueur_grille" in GET and "hauteur_grille" in GET:
     SESSION["partie_debut"] = True
@@ -11,15 +18,57 @@ if "longueur_grille" in GET and "hauteur_grille" in GET:
 if "quitter" in GET:
     if GET["quitter"][0] == "confirmer":
         SESSION["partie_debut"] = False
+        
+        
+###Pour récupérer le mode
+if "mode" in GET:
+    SESSION["mode"] = int (GET["mode"][0])
+    print (SESSION["mode"])
     
+ 
+###Pour récupérer la liste des joueuses
+res_joueuse = get_joueuses(SESSION["CONNEXION"])
+if res_joueuse is not None:
+    SESSION["joueuses"] = res_joueuse
+else:
+    SESSION["joueuses"] = "Aucune joueuses n'est enregistrés "
+
+###Pour récupérer la liste des joueuses choisies pour la partie 
+if "joueuses" in GET:
+    for i in  GET["joueuses"]:
+        SESSION["tab_joueuse"].append(i)
+        print (i)
 
 
+###Pour ajouter une joueuse
+
+if POST and 'prenom' in POST and 'date_inscription' in POST:  # formulaire soumis avec les champs nécessaires
+    prenom = POST['prenom'][0]  # Récupérer le prénom
+    date_inscription = POST['date_inscription'][0]  # Récupérer la date d'inscription
+    avatar = POST['avatar'][0] if 'avatar' in POST else None  # Si l'Avatard est mal
+
+    # Vérification : le prénom ne doit pas déjà exister (optionnel si cela est une contrainte)
+    joueuses_existantes = get_joueuse_by_name(SESSION['CONNEXION'], prenom)  # Fonction pour vérifier l'existence
+    if joueuses_existantes and len(joueuses_existantes) > 0:  # Joueuse déjà existante
+        REQUEST_VARS['message'] = f"Erreur : Une joueuse existe déjà avec ce prénom ({prenom})."
+        REQUEST_VARS['message_class'] = "alert-error"
+    else:  # Pas de joueuse existante, on peut insérer
+        try:
+            result = insert_joueuse(SESSION['CONNEXION'], prenom, date_inscription, avatar)
+            if result:
+                REQUEST_VARS['message'] = f"La joueuse {prenom} a été ajoutée avec succès."
+                REQUEST_VARS['message_class'] = "alert-success"
+            else:
+                REQUEST_VARS['message'] = f"Erreur lors de l'ajout de la joueuse {prenom}."
+                REQUEST_VARS['message_class'] = "alert-error"
+        except Exception as e:
+            REQUEST_VARS['message'] = f"Erreur technique : {e}"
+            REQUEST_VARS['message_class'] = "alert-error"
 
 
 
 
          
-
 
 
 """
@@ -136,7 +185,10 @@ if "longueur_grille" in GET and "hauteur_grille" in GET:
 
 ###Pour la gestion de la pioche 
 if SESSION["pioche"] is None:
-    res = get_briques_pour_pioche(SESSION["CONNEXION"])
+    if SESSION["mode"]==1:
+        res = get_briques_pour_pioche(SESSION["CONNEXION"])
+    else:
+        res = get_briques_pour_pioche_hard(SESSION["CONNEXION"])
     if res is not None:
                 SESSION["pioche"] = res
                 tab_pioche = res
@@ -148,9 +200,15 @@ if "brique_id" in GET:
         if SESSION["pioche"][i][0]==int(GET["brique_id"][0]):
             SESSION["choix"].append(SESSION["pioche"][i][0])
             SESSION["choix_ensemble"].append(SESSION["pioche"][i])
-            res3 = get_briques_pour_pioche_maj(SESSION["CONNEXION"])
-            while res3 in SESSION["choix"]:
+            if SESSION["mode"]==1:
                 res3 = get_briques_pour_pioche_maj(SESSION["CONNEXION"])
+            else:
+                res3 = get_briques_pour_pioche_maj_hard(SESSION["CONNEXION"])
+            while res3 in SESSION["choix"]:
+                if SESSION["mode"]==1:
+                    res3 = get_briques_pour_pioche_maj(SESSION["CONNEXION"])
+                else:
+                    res3 = get_briques_pour_pioche_maj_hard(SESSION["CONNEXION"])
             SESSION["pioche"][i]=res3[0]
             
             ###Pour obtenir la longeur et la largeur de la brique sélectionné

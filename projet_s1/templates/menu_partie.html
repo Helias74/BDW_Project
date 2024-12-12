@@ -1,4 +1,52 @@
-<h2>Commencer par choisir la taille de la grille </h2>
+<h2>Prêt à Jouer !!!</h2>
+<br>
+<br>
+<form method="get" action="jouer">
+    <div>
+        <label for="joueuses">Sélectionnez les joueuses :</label><br>
+        {% for joueuse in SESSION["joueuses"] %}
+            <input type="checkbox" name="joueuses" value="{{ joueuse[0] }}" id="joueuse_{{ joueuse[0] }}">
+            <label for="joueuse_{{ joueuse[0] }}">{{ joueuse[1] }}</label><br>
+        {% endfor %}
+    </div>
+    <button type="submit">Valider</button>
+</form>
+<br>
+<br>
+
+
+<form method="post" action="jouer">
+    <div>
+        <label for="prenom">Prénom :</label>
+        <input type="text" id="prenom" name="prenom" required maxlength="42">
+    </div>
+    <div>
+        <label for="date_inscription">Date d'inscription :</label>
+        <input type="date" id="date_inscription" name="date_inscription" required>
+    </div>
+    <div>
+        <label for="avatar">URL de l'avatar :</label>
+        <input type="url" id="avatar" name="avatar" placeholder="https://exemple.com/avatar.png" required maxlength="255">
+    </div>
+    <button type="submit">Ajouter la joueuse</button>
+</form>
+
+<br>
+<br>
+<form method="get" action="jouer">
+    <label for="mode">Choisissez un mode de jeu :</label><br>
+    <input type="radio" id="1" name="mode" value="1" required>
+    <label for="1">Facile</label><br>
+    <input type="radio" id="2" name="mode" value="2" required>
+    <label for="2">Difficile</label><br>
+    <button type="submit">Valider</button>
+</form>
+
+
+
+<br>
+<br>
+Choisir la taille de la grille 
 <form action="jouer" method="get">
     <input 
         type="number" 
