@@ -19,7 +19,7 @@
 
 
     {% if SESSION["partie_debut"] == True %}
-
+        {% include "info.html" %}
         {% include "pioche.html" %}
 
         {% if "brique_id" in GET and SESSION["choix"] %}

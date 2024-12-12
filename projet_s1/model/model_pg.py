@@ -193,3 +193,35 @@ def get_joueuse_by_name(connexion, prenom):
     '''
     return execute_select_query(connexion, query, [prenom])
 
+
+def insert_tour(connexion, action, piece_id, joueuse_id):
+    """
+    Insère un tour dans la table 'tours'.
+    """
+    query = '''
+        INSERT INTO tours (action, piece_id, joueuse_id)
+        VALUES (%s, %s, %s)
+    '''
+    return execute_other_query(connexion, query, [action, piece_id, joueuse_id])
+
+
+def insert_partie(connexion, Date_deb, Date_fin=None):
+    """
+    Insère une partie dans la base de données.
+    """
+    query = '''
+        INSERT INTO partie (Date_deb, Date_fin)
+        VALUES (%s, %s)
+    '''
+    return execute_other_query(connexion, query, [Date_deb, Date_fin])
+
+
+def insert_participation(connexion, Date_deb, Joueuse_id, Score, Est_Gagnante=False):
+    """
+    Insère une participation dans la table participation.
+    """
+    query = '''
+        INSERT INTO participation (Date_deb, Joueuse_id, Score, Est_Gagnante)
+        VALUES (%s, %s, %s, %s)
+    '''
+    return execute_other_query(connexion, query, [Date_deb, Joueuse_id, Score, Est_Gagnante])

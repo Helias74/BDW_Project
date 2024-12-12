@@ -1,5 +1,6 @@
 import psycopg
 import random
+from datetime import datetime
 from model.model_pg import (
     get_briques_pour_pioche,
     get_briques_pour_pioche_maj,
@@ -8,15 +9,25 @@ from model.model_pg import (
     get_joueuses,
     insert_joueuse,
     get_joueuse_by_name,
+    insert_tour,
+    insert_partie,
+    insert_participation,
 )
 ###Pour la gestion de lancement de la partie 
 if "longueur_grille" in GET and "hauteur_grille" in GET:
     SESSION["partie_debut"] = True
+    SESSION["Date_deb"] = datetime.today().date()
 
 ###Pour gérer la fin de partie 
 
 if "quitter" in GET:
     if GET["quitter"][0] == "confirmer":
+        SESSION["avancement_tours"]=0
+        SESSION["nb_tours"] = 1
+        SESSION["scores"] = {joueuse_id: 0 for joueuse_id in SESSION["tab_joueuse"]} #rermise des score à 0
+        SESSION["Date_fin"] = datetime.today().date()
+        insert_partie(SESSION["CONNEXION"], SESSION["Date_deb"], SESSION["Date_fin"])
+        
         SESSION["partie_debut"] = False
         
         
@@ -38,6 +49,8 @@ if "joueuses" in GET:
     for i in  GET["joueuses"]:
         SESSION["tab_joueuse"].append(i)
         print (i)
+    SESSION["joueuse_actuelle"]=SESSION["tab_joueuse"][0]
+    SESSION["scores"] = {joueuse_id: 0 for joueuse_id in SESSION["tab_joueuse"]}
 
 
 ###Pour ajouter une joueuse
@@ -45,25 +58,19 @@ if "joueuses" in GET:
 if POST and 'prenom' in POST and 'date_inscription' in POST:  # formulaire soumis avec les champs nécessaires
     prenom = POST['prenom'][0]  # Récupérer le prénom
     date_inscription = POST['date_inscription'][0]  # Récupérer la date d'inscription
-    avatar = POST['avatar'][0] if 'avatar' in POST else None  # Si l'Avatard est mal
+    avatar = POST['avatar'][0] if 'avatar' in POST else None  # Si l'Avatard est male renseigné
 
-    # Vérification : le prénom ne doit pas déjà exister (optionnel si cela est une contrainte)
-    joueuses_existantes = get_joueuse_by_name(SESSION['CONNEXION'], prenom)  # Fonction pour vérifier l'existence
-    if joueuses_existantes and len(joueuses_existantes) > 0:  # Joueuse déjà existante
-        REQUEST_VARS['message'] = f"Erreur : Une joueuse existe déjà avec ce prénom ({prenom})."
-        REQUEST_VARS['message_class'] = "alert-error"
-    else:  # Pas de joueuse existante, on peut insérer
-        try:
-            result = insert_joueuse(SESSION['CONNEXION'], prenom, date_inscription, avatar)
-            if result:
-                REQUEST_VARS['message'] = f"La joueuse {prenom} a été ajoutée avec succès."
-                REQUEST_VARS['message_class'] = "alert-success"
-            else:
-                REQUEST_VARS['message'] = f"Erreur lors de l'ajout de la joueuse {prenom}."
-                REQUEST_VARS['message_class'] = "alert-error"
-        except Exception as e:
-            REQUEST_VARS['message'] = f"Erreur technique : {e}"
+    try:
+        result = insert_joueuse(SESSION['CONNEXION'], prenom, date_inscription, avatar)
+        if result:
+            REQUEST_VARS['message'] = f"La joueuse {prenom} a été ajoutée avec succès."
+            REQUEST_VARS['message_class'] = "alert-success"
+        else:
+            REQUEST_VARS['message'] = f"Erreur lors de l'ajout de la joueuse {prenom}."
             REQUEST_VARS['message_class'] = "alert-error"
+    except Exception as e:
+        REQUEST_VARS['message'] = f"Erreur technique : {e}"
+        REQUEST_VARS['message_class'] = "alert-error"
 
 
 
@@ -184,6 +191,7 @@ if "longueur_grille" in GET and "hauteur_grille" in GET:
 
 
 ###Pour la gestion de la pioche 
+
 if SESSION["pioche"] is None:
     if SESSION["mode"]==1:
         res = get_briques_pour_pioche(SESSION["CONNEXION"])
@@ -236,7 +244,6 @@ if "x" in GET and "y" in GET:
         b=False
         
     if b==False:
-        SESSION["nb_tours"]-=1
         print ("Aucune piece n'a été placé")
     else:
         for i in range (SESSION["longeur_brique_select"]):
@@ -244,8 +251,49 @@ if "x" in GET and "y" in GET:
                 SESSION["grille"][SESSION["posx"]+i][SESSION["posy"]+j] = SESSION["choix_ensemble"][len(SESSION["choix_ensemble"])-1][0]
                 SESSION["couleur"] = SESSION["choix_ensemble"][len(SESSION["choix_ensemble"])-1][4]
                 SESSION["grille_piece"][SESSION["posx"]+i][SESSION["posy"]+j]  =  (SESSION["choix_ensemble"][len(SESSION["choix_ensemble"])-1][0],SESSION["couleur"])
-        SESSION["nb_tours"]-=1
         print ("une piece a été placé")
+        ###Pour Actuamisation et avncement du tours
+    #print ("le tableau tab joueuse est print en dessous")
+    #print (SESSION["tab_joueuse"])
+    
+    if SESSION["tab_joueuse"]:
+        ###Gestion des infos sur les tours :
+        ##Pour table tours
+        print ("impréssion des scores")
+        print (SESSION["scores"])
+        if SESSION["posx"]<21:
+            insert_tour(SESSION["CONNEXION"], 'ajouter', SESSION["choix_ensemble"][len(SESSION["choix_ensemble"])-1][0], SESSION["tab_joueuse"][SESSION["avancement_tours"]])
+        else:
+            insert_tour(SESSION["CONNEXION"], 'defausser', SESSION["choix_ensemble"][len(SESSION["choix_ensemble"])-1][0], SESSION["tab_joueuse"][SESSION["avancement_tours"]])
+            SESSION["scores"][SESSION["tab_joueuse"][SESSION["avancement_tours"]]] += 2
+        
+        SESSION["avancement_tours"] += 1
+        if SESSION["avancement_tours"] >= len(SESSION["tab_joueuse"]):  # Si on dépasse la dernière joueuse
+            SESSION["avancement_tours"] = 0  # Revenir à la première joueuse
+            SESSION["nb_tours"] += 1  # Compter un tour supplémentaire
+        SESSION["joueuse_actuelle"] = SESSION["tab_joueuse"][SESSION["avancement_tours"]]
+        
+        ###Pour gestion du gagnant
+        
+        gagnant = SESSION["tab_joueuse"][0][0]  # ID de la première joueuse
+        score_gagnant = SESSION["scores"].get(SESSION["tab_joueuse"][0][0], 0)  # Score de la première joueuse
+
+        for i in SESSION["tab_joueuse"]:  # Parcours de toutes les joueuses
+            joueuse_id = i[0]  # Récupère l'ID de la joueuse première pour commencer 
+            joueuse_score = SESSION["scores"].get(joueuse_id, 0)  # Récupère son score (0 par défaut)
+    
+            if joueuse_score < score_gagnant:  # changement de gagnant 
+                print("Changement de vainqueur")
+                score_gagnant = joueuse_score  # Met à jour le score gagnant
+                SESSION["gagnant"] = joueuse_id  # Met à jour l'ID du gagnant
+            if joueuse_id==SESSION["gagnant"]:
+                insert_participation(SESSION["CONNEXION"], SESSION["Date_deb"], joueuse_id, joueuse_score, Est_Gagnante=True)
+            else:
+                insert_participation(SESSION["CONNEXION"], SESSION["Date_deb"], joueuse_id, joueuse_score, Est_Gagnante=False)
+    
+        
+            
+    
         
 
 
