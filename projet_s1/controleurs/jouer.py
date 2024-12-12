@@ -127,7 +127,7 @@ if "longueur_grille" in GET and "hauteur_grille" in GET:
                 if SESSION["grille"][i][j]==SESSION["case"]:
                     SESSION["grille_piece"][i][j]=(SESSION["case"],"#0D97D7")        
                 if SESSION["grille"][i][j]==SESSION["cible"]:
-                    SESSION["grille_piece"][i][j]=(SESSION["cible"],"#8649d0")  
+                    SESSION["grille_piece"][i][j]=(SESSION["cible"],"#FBFF26")  
     SESSION["bool_grille"]=True
         
   

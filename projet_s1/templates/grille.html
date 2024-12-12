@@ -16,9 +16,6 @@
     
     <button type="submit">Valider la sélection</button>
 </form>
-
-
-
 </br>
 </br>
 <table>
@@ -26,13 +23,19 @@
         {% for i in range(SESSION["hauteur"]) %}
             <tr>
                 {% for j in range(SESSION["longueur"]) %}
-                    <td style="background-color: {{ SESSION["grille_piece"][i][j][1] }};"></td>
+                    {% if  SESSION["grille_piece"][i][j][0]==-1 or SESSION["grille_piece"][i][j][0]==-2 %}
+                        <td style="background-color: {{ SESSION["grille_piece"][i][j][1] }};"></td>
+                    {%else%}
+                    <td style="background-color: {{ SESSION["grille_piece"][i][j][1] }}; text-align: center; vertical-align: middle;">
+                        {{ SESSION["grille_piece"][i][j][0] }}
+                    </td>
+                    {% endif %} 
                 {% endfor %}
+                  
             </tr>
         {% endfor %}
     {% endif %}
 </table>
-
 <form action="jouer" method="get">
   <p>Voulez-vous quitter la partie en cours ?</p>
   <button type="submit" name="quitter" value="confirmer">Confirmer</button>
