@@ -23,3 +23,4 @@ SESSION["nb_tours"] = 5
 SESSION["changement"] = False # permet de notifier d'un changement pour regénérer la grille 
 SESSION["longeur_brique_select"] = 0
 SESSION["largeur_brique_select"] = 0
+SESSION["grille_piece"] = [] #Grille composé de tuples avec l'id et la couleur

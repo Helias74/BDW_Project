@@ -44,15 +44,17 @@ gauche = 3
 
 #Initialisation de la grille
 if "longueur_grille" in GET and "hauteur_grille" in GET:
-    if SESSION["longueur"] != int(GET["longueur_grille"][0]) or SESSION["hauteur"] != int(GET["hauteur_grille"][0]) or SESSION["changement"] == True:
+    if SESSION["longueur"] != int(GET["longueur_grille"][0]) or SESSION["hauteur"] != int(GET["hauteur_grille"][0]):
         SESSION["bool_grille"]=False
     if SESSION["bool_grille"]==False:
         SESSION["longueur"] = int(GET["longueur_grille"][0])
         SESSION["hauteur"] = int(GET["hauteur_grille"][0])
         SESSION["grille"] = [[SESSION["case"] for _ in range(SESSION["longueur"])] for _ in range(SESSION["hauteur"])]
+        SESSION["grille_piece"] = [[(SESSION["case"],"#0D97D7") for _ in range(SESSION["longueur"])] for _ in range(SESSION["hauteur"])]
         for i in range  (SESSION["hauteur"]):
             for j in range (SESSION["longueur"]):
                 SESSION["grille"][i][j]=SESSION["case"]
+                SESSION["grille_piece"][i][j]=(SESSION["case"],"#0D97D7")
         #Pour le nb de cibles 
         nb = 0
         nb = SESSION["longueur"] * SESSION["hauteur"]
@@ -118,8 +120,14 @@ if "longueur_grille" in GET and "hauteur_grille" in GET:
             if  len (memoire_direction)>=4:
                 nb=0
             else:
-                nb=nb_provisoir        
-    
+                nb=nb_provisoir
+        
+        for i in range  (SESSION["hauteur"]):
+            for j in range (SESSION["longueur"]):
+                if SESSION["grille"][i][j]==SESSION["case"]:
+                    SESSION["grille_piece"][i][j]=(SESSION["case"],"#0D97D7")        
+                if SESSION["grille"][i][j]==SESSION["cible"]:
+                    SESSION["grille_piece"][i][j]=(SESSION["cible"],"#8649d0")  
     SESSION["bool_grille"]=True
         
   
@@ -156,6 +164,7 @@ if "x" in GET and "y" in GET:
     SESSION["posx"] = int(GET["x"][0])
     SESSION["posy"] = int(GET["y"][0])
     ##Pour Vérifier si le placement choisie est possible 
+    
     b=True
     if (SESSION["longeur_brique_select"] + SESSION["posx"]) <=SESSION["hauteur"]-1 and (SESSION["largeur_brique_select"] + SESSION["posx"]) <=SESSION["longueur"]-1 :
         b=True
@@ -175,9 +184,11 @@ if "x" in GET and "y" in GET:
         for i in range (SESSION["longeur_brique_select"]):
             for j in range(SESSION["largeur_brique_select"]):
                 SESSION["grille"][SESSION["posx"]+i][SESSION["posy"]+j] = SESSION["choix_ensemble"][len(SESSION["choix_ensemble"])-1][0]
-        SESSION["changement"] = True
+                SESSION["couleur"] = SESSION["choix_ensemble"][len(SESSION["choix_ensemble"])-1][4]
+                SESSION["grille_piece"][SESSION["posx"]+i][SESSION["posy"]+j]  =  (SESSION["choix_ensemble"][len(SESSION["choix_ensemble"])-1][0],SESSION["couleur"])
         SESSION["nb_tours"]-=1
         print ("une piece a été placé")
+        
 
 
 

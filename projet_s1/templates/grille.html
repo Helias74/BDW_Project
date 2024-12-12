@@ -5,14 +5,14 @@
         name="x" 
         placeholder="y" 
         min="0" 
-        max="{{ SESSION['longueur'] - 1 }}">
+        max="{{ SESSION['hauteur'] - 1 }}">
     
     <input 
         type="number" 
         name="y" 
         placeholder="x" 
         min="0" 
-        max="{{ SESSION['hauteur'] - 1 }}">
+        max="{{ SESSION['longueur'] - 1 }}">
     
     <button type="submit">Valider la sélection</button>
 </form>
@@ -26,15 +26,7 @@
         {% for i in range(SESSION["hauteur"]) %}
             <tr>
                 {% for j in range(SESSION["longueur"]) %}
-                    {% if SESSION["grille"][i][j] == SESSION["case"] %}
-                        <td class="blue"></td>
-                    {% endif %}
-                    {% if SESSION["grille"][i][j] == SESSION["cible"] %}
-                        <td class="yellow"></td>
-                    {% endif %}
-                    {% if SESSION["grille"][i][j] != SESSION["cible"] and SESSION["grille"][i][j] != SESSION["case"] %}
-                        <td class="black"></td>
-                    {% endif %}
+                    <td style="background-color: {{ SESSION["grille_piece"][i][j][1] }};"></td>
                 {% endfor %}
             </tr>
         {% endfor %}
