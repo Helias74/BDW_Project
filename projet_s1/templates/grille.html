@@ -18,6 +18,15 @@
 </form>
 </br>
 </br>
+<h2>Ou Choisissez de déffausser</h2>
+<form method="get" action="jouer">
+    <input type="hidden" name="x" value="21">
+    <input type="hidden" name="y" value="21">
+    <button type="submit" name="action" value="defausser">Défausser</button>
+</form>
+</br>
+</br>
+
 <table>
     {% if GET["longueur_grille"] and GET["hauteur_grille"] or SESSION["bool_grille"] == True %} 
         {% for i in range(SESSION["hauteur"]) %}
